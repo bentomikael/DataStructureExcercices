@@ -1,5 +1,3 @@
-package ListaDuplamenteEncadeada;
-
 import java.util.EmptyStackException;
 
 public class Lista {
@@ -158,26 +156,55 @@ public class Lista {
         }else
             throw new Exception("Lista está vazia");
     }
+
     /**
-     *
+     * Busca um elemento de cada vez
      * @param elemento a ser encontrado
      * @return true se encontrar e false caso nao encontre
      */
-    public boolean buscar(Object elemento){                         //melhorar
-        if(contador > 0) {
-            int contadorTemporario = contador;
-            irParaPrimeiro();
-            while(contadorTemporario > 0) {
-                if (ponteiro.getElemento() == elemento)
-                    return true;
-                else
-                    ponteiro = ponteiro.getProximo();
-                contadorTemporario--;
-            }
-        }
+    public boolean buscar(Object elemento){
+        int contadorTemporario = 0;
+			if(contador > 0){
+                    irParaUltimo(); // os ultimos serão os primeiros :)
 
+                    while(contadorTemporario < contador) {
+                        if (ponteiro.getElemento().equals(elemento))
+                            return true;
+                        else
+                            ponteiro = ponteiro.getProximo();
+                        contadorTemporario++;
+				    }
+			    }
         return false;
     }
+
+    /**
+     * Busca elemeto a partir do começo e do final ao mesmo tempo.
+     * O desempenho é melhor de acordo com a distancia do elemento
+     * procurado do centro da lista
+     * @param elemento a ser encontrado
+     * @return true se encontrar e false caso nao encontre
+     */
+	public boolean buscarAprimorado(Object elemento){
+		irParaPrimeiro();
+		Caixa ponteiroInverso = ultimo;
+
+		if (primeiro.getElemento().equals(elemento)||ultimo.getElemento().equals(elemento))
+		    return true;
+		else
+            do{
+                if(ponteiro.getProximo().getElemento().equals(elemento)||
+                        ponteiroInverso.getAnterior().getElemento().equals(elemento))
+                    return true;
+                else {
+                    ponteiro = ponteiro.getProximo();
+                    ponteiroInverso = ponteiroInverso.getAnterior();
+                }
+            }while(ponteiroInverso.getAnterior() != ponteiro.getProximo() ||
+                        ponteiro.getProximo() != ponteiroInverso);
+		return false;		
+	}
+
     /**
      * @return elemento que está sendo apontado atualmente
      */

@@ -1,8 +1,6 @@
-package ListaDuplamenteEncadeada;
-
 public class Caixa {
     private Object elemento;
-    private Caixa proximo,anterior ;
+    private Caixa proximo,anterior;
 
     public Caixa(Caixa anterior,Caixa proximo,Object elemento) {
         this.anterior = anterior;
